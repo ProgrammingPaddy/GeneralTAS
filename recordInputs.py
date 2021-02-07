@@ -96,7 +96,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     directory = 'mouse_recorder'
     try:
-        session_name = 'test13abbab'
+        session_name = 'newkeyboardreplaytest3'
     except:
         print('you must enter a name for the session\nfor example: python record.py session_name')
         sys.exit()
@@ -104,33 +104,33 @@ if __name__ == '__main__':
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
-saved_recording = []
-file_name = 'history.txt'
-file_path = os.path.join(dir_path, file_name)
-print(dir_path)
+    saved_recording = []
+    file_name = 'history.txt'
+    file_path = os.path.join(dir_path, file_name)
+    print(dir_path)
 
-ld = partial(left_down, file_path=file_path)
-lu = partial(left_up, file_path=file_path)
-rd = partial(right_down, file_path=file_path)
-ru = partial(right_up, file_path=file_path)
-mv = partial(moved, file_path=file_path)
+    ld = partial(left_down, file_path=file_path)
+    lu = partial(left_up, file_path=file_path)
+    rd = partial(right_down, file_path=file_path)
+    ru = partial(right_up, file_path=file_path)
+    mv = partial(moved, file_path=file_path)
 
-hm = pyWinhook.HookManager()
-hm.SubscribeMouseLeftDown(ld)
-hm.SubscribeMouseLeftUp(lu)
-hm.SubscribeMouseRightDown(rd)
-hm.SubscribeMouseRightUp(ru)
-hm.SubscribeMouseMove(mv)
-hm.HookMouse()
+    hm = pyWinhook.HookManager()
+    hm.SubscribeMouseLeftDown(ld)
+    hm.SubscribeMouseLeftUp(lu)
+    hm.SubscribeMouseRightDown(rd)
+    hm.SubscribeMouseRightUp(ru)
+    hm.SubscribeMouseMove(mv)
+    hm.HookMouse()
 
-pressedKey = partial(key_down, file_path=file_path, dir_path=dir_path)
-releasedKey = partial(key_up, file_path=file_path, dir_path=dir_path)
+    pressedKey = partial(key_down, file_path=file_path, dir_path=dir_path)
+    releasedKey = partial(key_up, file_path=file_path, dir_path=dir_path)
 
-hm.KeyDown = pressedKey
-hm.KeyUp = releasedKey
-hm.HookKeyboard()
+    hm.KeyDown = pressedKey
+    hm.KeyUp = releasedKey
+    hm.HookKeyboard()
 
-pythoncom.PumpMessages()
+    pythoncom.PumpMessages()
 
-hm.UnhookMouse()
-hm.UnHookKeyboard()
+    hm.UnhookMouse()
+    hm.UnHookKeyboard()
