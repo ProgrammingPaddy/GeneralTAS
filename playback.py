@@ -9,7 +9,7 @@ import ctypes
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 directory = 'mouse_recorder'
 try:
-    session_name = 'newkeyboardreplaytest3'
+    session_name = 'newkeyboardreplaytest7'
 except:
     print('you must enter a name for the session\nfor example: python replay.py session_name')
     sys.exit()
@@ -49,9 +49,10 @@ for step in new_steps:
             t_two = time.time()
         else:
             print('moved')
-            pos_x = (65536 * int(step[1]) / ctypes.windll.user32.GetSystemMetrics(0) + 1)
-            pos_y = (65536 * int(step[2]) / ctypes.windll.user32.GetSystemMetrics(1) + 1)
-            ctypes.windll.user32.mouse_event((0x0001 + 0x8000), int(pos_x), int(pos_y), 0, 0)
+            #pos_x = (65536 * int(step[1]) / ctypes.windll.user32.GetSystemMetrics(0) + 1)
+            #pos_y = (65536 * int(step[2]) / ctypes.windll.user32.GetSystemMetrics(1) + 1)
+            #ctypes.windll.user32.mouse_event((0x0001 + 0x8000), int(pos_x), int(pos_y), 0, 0)
+            ctypes.windll.user32.SetCursorPos(int(step[1]), int(step[2]))
             #pyautogui.moveTo(int(step[1]), int(step[2]))
             t_last = float(step[-1])
 
@@ -66,7 +67,8 @@ for step in new_steps:
         else:
             holder = ctypes.windll.User32.VkKeyScanW(ord(step[1]))
             used_code = int(hex(holder), 16)
-            ctypes.windll.user32.keybd_event(used_code, 0, 0, 0)
+            scan_code = ctypes.windll.User32.MapVirtualKeyW(used_code, 0)
+            ctypes.windll.user32.keybd_event(used_code, scan_code, 0, 0)
             #pyautogui.keyDown(step[1])
             t_last = float(step[-1])
 
@@ -81,7 +83,8 @@ for step in new_steps:
         else:
             holder = ctypes.windll.User32.VkKeyScanW(ord(step[1]))
             used_code = int(hex(holder), 16)
-            ctypes.windll.user32.keybd_event(used_code, 0, 0x0002, 0)
+            scan_code = ctypes.windll.User32.MapVirtualKeyW(used_code, 0)
+            ctypes.windll.user32.keybd_event(used_code, scan_code, 0x0002, 0)
             #pyautogui.keyUp(step[1])
             t_last = float(step[-1])
 
